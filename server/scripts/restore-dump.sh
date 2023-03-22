@@ -11,7 +11,7 @@ if [[ $extension != ".sql" ]]; then
   fi
 fi
 
-echo 'Restauration du dump'
+echo 'Restoring dump...'
   docker exec -i budjet-dev /bin/sh -c "PGPASSWORD=${PG_PASSWORD} psql -d ${DB_NAME} -U ${PG_USER} --command 'drop schema if exists ${DB_SCHEMA} cascade'"
   docker exec -i budjet-dev /bin/sh -c "PGPASSWORD=${PG_PASSWORD} psql -d ${DB_NAME} -U ${PG_USER}" < $1
-echo 'Dump restauré'
+echo 'Dump restored'
