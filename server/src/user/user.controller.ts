@@ -17,7 +17,9 @@ export class UserController {
 
   @Get(":userId")
   @HttpCode(200)
-  getUserById(@Param("userId") userId: string): Promise<UserModel> {
+  getUserById(
+    @Param("userId") userId: string
+  ): Promise<Omit<UserModel, "password">> {
     return this.userService.user({ id: Number(userId) });
   }
 
@@ -32,7 +34,7 @@ export class UserController {
       where?: Prisma.UserWhereInput;
       orderBy?: Prisma.UserOrderByWithRelationInput;
     }
-  ): Promise<UserModel[]> {
+  ): Promise<Omit<UserModel, "password">[]> {
     return this.userService.users(params);
   }
 
@@ -40,7 +42,7 @@ export class UserController {
   @HttpCode(201)
   createUser(
     @Body() userData: { email: string; password: string; name: string }
-  ): Promise<UserModel> {
+  ): Promise<Omit<UserModel, "password">> {
     return this.userService.createUser(userData);
   }
 
@@ -49,7 +51,7 @@ export class UserController {
   updateUserById(
     @Param("userId") userId: string,
     @Body() dataUpdate: Prisma.UserUpdateInput
-  ): Promise<UserModel> {
+  ): Promise<Omit<UserModel, "password">> {
     return this.userService.updateUser({
       where: { id: Number(userId) },
       data: dataUpdate,
