@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4c307200-89b8-4994-acea-1b7fccdfcb50",
+		"_postman_id": "262681e0-94e6-4ec0-9716-5fdb9405ef0d",
 		"name": "budjet",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18447908"
 	},
 	"item": [
 		{
@@ -49,13 +50,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{apiUrl}}/users/12",
+					"raw": "{{apiUrl}}/users/1",
 					"host": [
 						"{{apiUrl}}"
 					],
 					"path": [
 						"users",
-						"12"
+						"1"
 					]
 				}
 			},
@@ -141,7 +142,11 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.environment.set(\"budjet-token\", pm.response.json().access_token);"
+							"pm.test(\"access_token\", () => {\r",
+							"    pm.expect(pm.response.json().access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.collectionVariables.set(\"budjet-token\", pm.response.json().access_token);"
 						],
 						"type": "text/javascript"
 					}
@@ -163,12 +168,7 @@
 							"value": "password",
 							"type": "default"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
 					"raw": "{{apiUrl}}/auth/login",
@@ -205,12 +205,12 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{budjet-token}}",
-						"type": "default"
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"user@gmail.com\",\n    \"pass\": \"password\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -259,7 +259,8 @@
 		},
 		{
 			"key": "budjet-token",
-			"value": "budjet-token"
+			"value": "",
+			"type": "string"
 		}
 	]
 }
